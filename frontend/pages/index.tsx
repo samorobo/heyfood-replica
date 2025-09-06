@@ -273,11 +273,14 @@ export default function RestaurantsPage() {
                     key={index}
                   >
                     <Box sx={{ width: '100%' }}>
-                      <Skeleton 
-                        variant="rectangular" 
-                        height={{ xs: 160, sm: 180, md: 200 }} 
-                        sx={{ borderRadius: 2 }} 
-                      />
+                    <Skeleton
+  variant="rectangular"
+  sx={{
+    borderRadius: 2,
+    height: { xs: 160, sm: 180, md: 200 } // responsive height goes here
+  }}
+/>
+                            
                       <Box sx={{ p: 2 }}>
                         <Skeleton variant="text" height={28} />
                         <Skeleton variant="text" height={20} width="60%" />
