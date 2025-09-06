@@ -6,16 +6,16 @@ const seedData = async () => {
     // First ensure tables exist
     await createTables();
     
-    console.log('🌱 Seeding database...');
+    console.log('Seeding database...');
 
-    // Check if data already exists
+  
     const existingTags = await pool.query('SELECT COUNT(*) FROM tags');
     if (parseInt(existingTags.rows[0].count) > 0) {
-      console.log('📊 Data already exists, skipping seed');
+      console.log('Data already exists, skipping seed');
       return;
     }
 
-    // Seed tags with real HeyFood data
+  
     const tagData = [
       { name: "Rice", iconUrl: "https://firebasestorage.googleapis.com/v0/b/heypay-e9f1f.appspot.com/o/food%2Fjapanese-food-rice-svgrepo-com%201.svg_1657125340797?alt=media&token=5e4c0b0b-4a87-45c5-b053-85dfd13f624e" },
       { name: "Chicken", iconUrl: "https://firebasestorage.googleapis.com/v0/b/heypay-e9f1f.appspot.com/o/food%2Fchicken-christmas-food-svgrepo-com%201.svg_1657123972810?alt=media&token=6258348f-0c78-4df0-a15b-f1f1813fb042" },
@@ -36,7 +36,7 @@ const seedData = async () => {
       { name: "Ewa Agoyin", iconUrl: "https://firebasestorage.googleapis.com/v0/b/heypay-e9f1f.appspot.com/o/food%2FFrame%201482.svg_1657125007546?alt=media&token=f7131558-2d48-4ba1-8981-9f98103aae34" }
     ];
 
-    // Insert tags
+
     const tagInsertPromises = tagData.map(tag => 
       pool.query(
         'INSERT INTO tags (name, icon_url) VALUES ($1, $2) RETURNING id, name',
@@ -46,9 +46,8 @@ const seedData = async () => {
     const tagResults = await Promise.all(tagInsertPromises);
     const tagMap = new Map(tagResults.map(result => [result.rows[0].name, result.rows[0].id]));
 
-    console.log(`✅ Inserted ${tagResults.length} tags`);
+    console.log(`Inserted ${tagResults.length} tags`);
 
-    // Seed restaurants with real HeyFood data
     const restaurantData = [
       {
         name: "Ile Iyan bodija",
@@ -140,7 +139,7 @@ const seedData = async () => {
     const restaurantResults = await Promise.all(restaurantInsertPromises);
     const restaurantMap = new Map(restaurantResults.map(result => [result.rows[0].name, result.rows[0].id]));
 
-    console.log(`✅ Inserted ${restaurantResults.length} restaurants`);
+    console.log(`Inserted ${restaurantResults.length} restaurants`);
 
     // Link restaurants to tags
     const restaurantTagMappings = [
@@ -171,16 +170,15 @@ const seedData = async () => {
       }
     }
 
-    console.log(`✅ Created ${tagLinkCount} restaurant-tag relationships`);
-    console.log('🎉 Database seeded successfully!');
+    console.log(`Created ${tagLinkCount} restaurant-tag relationships`);
+    console.log('Database seeded successfully!');
 
   } catch (error) {
-    console.error('❌ Error seeding database:', error);
+    console.error('Error seeding database:', error);
     throw error;
   }
 };
 
-// Run seed if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   seedData()
     .then(() => {

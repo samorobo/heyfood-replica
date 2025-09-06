@@ -3,14 +3,6 @@ import storageService from '../services/storageService.js';
 
 const router = express.Router();
 
-/**
- * GET /api/restaurants
- * Fetch all restaurants with optional filtering and sorting
- * Query params:
- * - search: string (optional) - search restaurants by name
- * - tags: string (optional) - comma-separated tag IDs to filter by
- * - sort: string (optional) - sort option: "Highest rated", "Newest", "Most Rated", "Most Popular"
- */
 router.get('/restaurants', async (req, res) => {
   try {
     const { search, tags, sort } = req.query;
@@ -48,10 +40,7 @@ router.get('/restaurants', async (req, res) => {
   }
 });
 
-/**
- * GET /api/restaurants/:id
- * Fetch a single restaurant by ID
- */
+
 router.get('/restaurants/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -87,10 +76,7 @@ router.get('/restaurants/:id', async (req, res) => {
   }
 });
 
-/**
- * GET /api/tags
- * Fetch all available food category tags
- */
+
 router.get('/tags', async (req, res) => {
   try {
     const tags = await storageService.getTags();
@@ -111,10 +97,7 @@ router.get('/tags', async (req, res) => {
   }
 });
 
-/**
- * GET /api/tags/:id
- * Fetch a single tag by ID
- */
+
 router.get('/tags/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -150,15 +133,12 @@ router.get('/tags/:id', async (req, res) => {
   }
 });
 
-/**
- * POST /api/restaurants
- * Create a new restaurant (for admin use)
- */
+
 router.post('/restaurants', async (req, res) => {
   try {
     const restaurantData = req.body;
     
-    // Basic validation
+    
     if (!restaurantData.name || !restaurantData.imageUrl) {
       return res.status(400).json({
         success: false,
@@ -184,15 +164,12 @@ router.post('/restaurants', async (req, res) => {
   }
 });
 
-/**
- * POST /api/tags
- * Create a new tag (for admin use)
- */
+
 router.post('/tags', async (req, res) => {
   try {
     const tagData = req.body;
     
-    // Basic validation
+   
     if (!tagData.name || !tagData.iconUrl) {
       return res.status(400).json({
         success: false,
@@ -218,10 +195,7 @@ router.post('/tags', async (req, res) => {
   }
 });
 
-/**
- * POST /api/restaurants/:restaurantId/tags/:tagId
- * Add a tag to a restaurant
- */
+
 router.post('/restaurants/:restaurantId/tags/:tagId', async (req, res) => {
   try {
     const { restaurantId, tagId } = req.params;
@@ -250,10 +224,7 @@ router.post('/restaurants/:restaurantId/tags/:tagId', async (req, res) => {
   }
 });
 
-/**
- * DELETE /api/restaurants/:restaurantId/tags/:tagId
- * Remove a tag from a restaurant
- */
+
 router.delete('/restaurants/:restaurantId/tags/:tagId', async (req, res) => {
   try {
     const { restaurantId, tagId } = req.params;
@@ -282,10 +253,7 @@ router.delete('/restaurants/:restaurantId/tags/:tagId', async (req, res) => {
   }
 });
 
-/**
- * GET /api/health
- * Health check endpoint
- */
+
 router.get('/health', async (req, res) => {
   try {
     const health = await storageService.healthCheck();

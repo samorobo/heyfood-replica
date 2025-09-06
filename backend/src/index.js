@@ -4,32 +4,32 @@ import dotenv from 'dotenv';
 import apiRoutes from './routes/index.js';
 import seedData from './database/seed.js';
 
-// Load environment variables
+
 dotenv.config();
 
 const app = express();
 
-// Middleware
+
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.vercel.app'] // Replace with your actual frontend URL
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'], // Local development
+    ? ['https://your-frontend-domain.vercel.app'] 
+    : ['http://localhost:3000', 'http://127.0.0.1:3000'], 
   credentials: true
 }));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware
+
 app.use((req, res, next) => {
   const start = Date.now();
   const method = req.method;
   const url = req.url;
   
-  // Log request
+ 
   console.log(`📨 ${method} ${url} - ${new Date().toISOString()}`);
   
-  // Log response when finished
+ 
   res.on('finish', () => {
     const duration = Date.now() - start;
     const status = res.statusCode;
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check route (before API routes)
+
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -56,10 +56,10 @@ app.get('/', (req, res) => {
   });
 });
 
-// API routes
+
 app.use('/api', apiRoutes);
 
-// 404 handler for API routes
+
 app.use('/api/*', (req, res) => {
   res.status(404).json({
     success: false,
@@ -76,9 +76,9 @@ app.use('/api/*', (req, res) => {
   });
 });
 
-// Global error handler
+
 app.use((err, req, res, next) => {
-  console.error('💥 Unhandled error:', err);
+  console.error('Unhandled error:', err);
   
   const status = err.status || err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
@@ -90,47 +90,47 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Initialize database and start server
+
 async function startServer() {
   try {
     console.log('🚀 Starting HeyFood Clone API...');
     
-    // Initialize database with seed data
+    
     console.log('📊 Initializing database...');
     await seedData();
     
-    // Start server
+    
     const PORT = process.env.PORT || 5000;
-    const HOST = '0.0.0.0'; // Important for deployment
+    const HOST = '0.0.0.0'; 
     
     app.listen(PORT, HOST, () => {
-      console.log(`✅ Server running on http://${HOST}:${PORT}`);
-      console.log(`📚 API Documentation available at http://${HOST}:${PORT}`);
-      console.log(`🏥 Health check: http://${HOST}:${PORT}/api/health`);
-      console.log(`🍴 Restaurants: http://${HOST}:${PORT}/api/restaurants`);
-      console.log(`🏷️  Tags: http://${HOST}:${PORT}/api/tags`);
-      console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`Server running on http://${HOST}:${PORT}`);
+      console.log(`API Documentation available at http://${HOST}:${PORT}`);
+      console.log(`Health check: http://${HOST}:${PORT}/api/health`);
+      console.log(`Restaurants: http://${HOST}:${PORT}/api/restaurants`);
+      console.log(`Tags: http://${HOST}:${PORT}/api/tags`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
     
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error('Failed to start server:', error);
     process.exit(1);
   }
 }
 
-// Handle unhandled promise rejections
+
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('💥 Unhandled Rejection at:', promise, 'reason:', reason);
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
   process.exit(1);
 });
 
-// Handle uncaught exceptions
+
 process.on('uncaughtException', (error) => {
   console.error('💥 Uncaught Exception:', error);
   process.exit(1);
 });
 
-// Graceful shutdown
+
 process.on('SIGTERM', () => {
   console.log('📴 SIGTERM received, shutting down gracefully...');
   process.exit(0);
@@ -141,5 +141,5 @@ process.on('SIGINT', () => {
   process.exit(0);
 });
 
-// Start the server
+
 startServer();

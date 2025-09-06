@@ -2,7 +2,7 @@ import pool from './config.js';
 
 const createTables = async () => {
   try {
-    console.log('🔄 Creating database tables...');
+    console.log('Creating database tables...');
 
     // Create tags table
     await pool.query(`
@@ -32,7 +32,6 @@ const createTables = async () => {
       );
     `);
 
-    // Create restaurant_tags junction table
     await pool.query(`
       CREATE TABLE IF NOT EXISTS restaurant_tags (
         id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -42,7 +41,6 @@ const createTables = async () => {
       );
     `);
 
-    // Create indexes for better performance
     await pool.query(`
       CREATE INDEX IF NOT EXISTS idx_restaurants_name ON restaurants(name);
       CREATE INDEX IF NOT EXISTS idx_restaurants_rating ON restaurants(rating DESC);
@@ -51,14 +49,13 @@ const createTables = async () => {
       CREATE INDEX IF NOT EXISTS idx_restaurant_tags_tag_id ON restaurant_tags(tag_id);
     `);
 
-    console.log('✅ Database tables created successfully!');
+    console.log('Database tables created successfully!');
   } catch (error) {
-    console.error('❌ Error creating tables:', error);
+    console.error('Error creating tables:', error);
     throw error;
   }
 };
 
-// Run migration if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   createTables()
     .then(() => {

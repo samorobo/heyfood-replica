@@ -2,9 +2,7 @@ import pool from '../database/config.js';
 
 class StorageService {
   
-  /**
-   * Get restaurants with optional filtering and sorting
-   */
+  
   async getRestaurants({ search, tagIds, sortBy } = {}) {
     try {
       let query = `
@@ -36,16 +34,15 @@ class StorageService {
       const params = [];
       let paramIndex = 1;
 
-      // Add search condition
+      
       if (search && search.trim()) {
         conditions.push(`r.name ILIKE $${paramIndex}`);
         params.push(`%${search.trim()}%`);
         paramIndex++;
       }
 
-      // Add tag filtering - this is more complex as we need restaurants that have ALL specified tags
       if (tagIds && tagIds.length > 0) {
-        // Filter out empty strings and ensure we have valid UUIDs
+  
         const validTagIds = tagIds.filter(id => id && id.trim()).map(id => id.trim());
         if (validTagIds.length > 0) {
           conditions.push(`
@@ -60,18 +57,17 @@ class StorageService {
         }
       }
 
-      // Add WHERE clause if we have conditions
+
       if (conditions.length > 0) {
         query += ' WHERE ' + conditions.join(' AND ');
       }
 
-      // Add GROUP BY
       query += ` 
         GROUP BY r.id, r.name, r.image_url, r.rating, r.ratings_count, 
                  r.is_open, r.status, r.promo_text, r.delivery_info, r.created_at
       `;
 
-      // Add sorting
+
       switch (sortBy) {
         case "Highest rated":
           query += ' ORDER BY r.rating DESC, r.ratings_count DESC';
@@ -80,7 +76,7 @@ class StorageService {
           query += ' ORDER BY r.created_at DESC';
           break;
         case "Most Rated":
-          // Extract numeric part from ratings_count for sorting
+ 
           query += ` ORDER BY 
             CAST(REGEXP_REPLACE(r.ratings_count, '[^0-9]', '', 'g') AS INTEGER) DESC NULLS LAST,
             r.rating DESC`;
@@ -92,7 +88,7 @@ class StorageService {
 
       const result = await pool.query(query, params);
       
-      // Transform the results to match expected format
+  
       return result.rows.map(row => ({
         id: row.id,
         name: row.name,
@@ -113,9 +109,7 @@ class StorageService {
     }
   }
 
-  /**
-   * Get a single restaurant by ID
-   */
+ 
   async getRestaurantById(id) {
     try {
       const query = `
@@ -173,9 +167,6 @@ class StorageService {
     }
   }
 
-  /**
-   * Get all available tags
-   */
   async getTags() {
     try {
       const query = 'SELECT id, name, icon_url as "iconUrl", created_at as "createdAt" FROM tags ORDER BY name ASC';
@@ -187,9 +178,7 @@ class StorageService {
     }
   }
 
-  /**
-   * Get a single tag by ID
-   */
+  
   async getTagById(id) {
     try {
       const query = 'SELECT id, name, icon_url as "iconUrl", created_at as "createdAt" FROM tags WHERE id = $1';
@@ -201,9 +190,6 @@ class StorageService {
     }
   }
 
-  /**
-   * Create a new restaurant
-   */
   async createRestaurant(restaurantData) {
     try {
       const {
@@ -236,9 +222,7 @@ class StorageService {
     }
   }
 
-  /**
-   * Create a new tag
-   */
+ 
   async createTag(tagData) {
     try {
       const { name, iconUrl } = tagData;
@@ -256,9 +240,7 @@ class StorageService {
     }
   }
 
-  /**
-   * Add a tag to a restaurant
-   */
+ 
   async addTagToRestaurant(restaurantId, tagId) {
     try {
       const query = 'INSERT INTO restaurant_tags (restaurant_id, tag_id) VALUES ($1, $2)';
@@ -269,9 +251,7 @@ class StorageService {
     }
   }
 
-  /**
-   * Remove a tag from a restaurant
-   */
+
   async removeTagFromRestaurant(restaurantId, tagId) {
     try {
       const query = 'DELETE FROM restaurant_tags WHERE restaurant_id = $1 AND tag_id = $2';
@@ -282,9 +262,7 @@ class StorageService {
     }
   }
 
-  /**
-   * Health check - test database connection
-   */
+   
   async healthCheck() {
     try {
       const result = await pool.query('SELECT NOW() as current_time');
