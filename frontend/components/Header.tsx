@@ -189,7 +189,6 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
 
   return (
     <>
-      {/* Main header */}
       <StyledAppBar position="sticky" elevation={0}>
         <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3 } }}>
           <Toolbar
@@ -203,7 +202,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
               justifyContent: 'space-between'
             }}
           >
-            {/* Mobile Top Row: Logo + Menu Button */}
+            
             {isMobile && (
               <Box sx={{ 
                 display: 'flex', 
@@ -224,7 +223,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
               </Box>
             )}
 
-            {/* Desktop Left: Logo + Location */}
+            
             {!isMobile && (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <LogoImage 
@@ -240,7 +239,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
               </Box>
             )}
 
-            {/* Center: Search (Mobile: Full Width, Desktop: Flex) */}
+            
             <Box sx={{ 
               flex: { xs: 'none', sm: 1 }, 
               width: { xs: '100%', sm: 'auto' } 
@@ -261,7 +260,6 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
               />
             </Box>
 
-            {/* Desktop Right: Sign In + Cart */}
             {!isMobile && (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <SignInButton data-testid="button-sign-in">SIGN IN</SignInButton>
@@ -277,7 +275,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
         </Container>
       </StyledAppBar>
 
-      {/* Mobile Drawer Menu */}
+      
       <MobileDrawer
         anchor="right"
         open={mobileMenuOpen}
@@ -315,7 +313,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
 
           <Divider sx={{ my: 2 }} />
 
-          {/* Sign In */}
+          
           <ListItem 
             button 
             onClick={closeMobileMenu}
@@ -336,7 +334,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
 
           <Divider sx={{ my: 2 }} />
 
-          {/* Cart */}
+          
           <Box sx={{ px: 2 }}>
             <MobileCartButton
               startIcon={<ShoppingCart sx={{ fontSize: 16 }} />}
@@ -351,7 +349,7 @@ export default function Header({ searchTerm, onSearchChange }: HeaderProps) {
         </List>
       </MobileDrawer>
 
-      {/* Tabs */}
+      
       <Box sx={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e0e0e0' }}>
         <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3 } }}>
           <Box

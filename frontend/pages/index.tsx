@@ -27,7 +27,7 @@ const ContentWrapper = styled(Box)(({ theme }) => ({
 
 const MainContent = styled(Box)({
   flex: 1,
-  minWidth: 0 // Prevents flex item from overflowing
+  minWidth: 0 
 });
 
 const LoadMoreButton = styled(Button)(({ theme }) => ({
@@ -75,7 +75,7 @@ const MobileSidebarToggle = styled(Button)(({ theme }) => ({
   }
 }));
 
-// Mock carousel data - you can replace this with real data from your API
+
 const carouselItems = [
   {
     id: '1',
@@ -121,13 +121,13 @@ export default function RestaurantsPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
 
-  // Fetch tags
+  
   const { data: tags = [], isLoading: tagsLoading, error: tagsError } = useQuery<Tag[]>({
     queryKey: ['/tags'],
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000, 
   });
 
-  // Fetch restaurants with filters
+
   const { 
     data: restaurants = [], 
     isLoading: restaurantsLoading, 
@@ -135,7 +135,7 @@ export default function RestaurantsPage() {
     refetch
   } = useQuery<Restaurant[]>({
     queryKey: ['/restaurants', searchTerm, selectedTags.join(','), sortBy],
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 2 * 60 * 1000, 
   });
 
   const handleTagSelect = (tagId: string) => {
@@ -210,7 +210,7 @@ export default function RestaurantsPage() {
           px: { xs: 1, sm: 2, md: 3 } 
         }}
       >
-        {/* Category Filters - Horizontal Carousel */}
+       
         <CategoryFilters 
           tags={tags}
           selectedTags={selectedTags}
@@ -218,20 +218,19 @@ export default function RestaurantsPage() {
           isLoading={tagsLoading}
         />
 
-        {/* Promotional Carousel */}
         <CarouselSection 
           items={carouselItems}
           onItemClick={handleCarouselItemClick}
         />
 
-        {/* Mobile Sidebar Toggle */}
+      
         {isMobile && (
           <MobileSidebarToggle onClick={toggleMobileSidebar}>
             Filters & Sort ({restaurants.length} restaurants)
           </MobileSidebarToggle>
         )}
 
-        {/* Mobile Sidebar Drawer */}
+       
         <Drawer
           anchor="left"
           open={mobileSidebarOpen}
@@ -247,21 +246,21 @@ export default function RestaurantsPage() {
           {sidebarContent}
         </Drawer>
 
-        {/* Main Content with Sidebar */}
+       
         <ContentWrapper>
-          {/* Desktop Sidebar */}
+         
           {!isMobile && sidebarContent}
 
-          {/* Main Content Area */}
+       
           <MainContent>
-            {/* Section Header */}
+           
             <SearchAndSort 
               title="Spend Less, Order More! 😋"
               showNavigation={true}
               showSeeAll={true}
             />
 
-            {/* Restaurant Grid */}
+            
             {restaurantsLoading ? (
               <RestaurantGrid container spacing={{ xs: 2, sm: 2.5, md: 3 }}>
                 {[...Array(isMobile ? 4 : 8)].map((_, index) => (
@@ -314,7 +313,6 @@ export default function RestaurantsPage() {
               </RestaurantGrid>
             )}
 
-            {/* Additional Sections */}
             {restaurants.length > 0 && (
               <>
                 <Box sx={{ mt: { xs: 4, sm: 5, md: 6 } }}>
@@ -388,7 +386,6 @@ export default function RestaurantsPage() {
               </>
             )}
 
-            {/* Load More Button */}
             {restaurants.length > 0 && (
               <Box sx={{ textAlign: 'center', mt: { xs: 4, sm: 5, md: 6 } }}>
                 <LoadMoreButton data-testid="button-load-more">
@@ -400,7 +397,7 @@ export default function RestaurantsPage() {
         </ContentWrapper>
       </Container>
 
-      {/* Footer */}
+
       <Box sx={{ 
         backgroundColor: '#ffffff', 
         borderTop: '1px solid #e0e0e0', 

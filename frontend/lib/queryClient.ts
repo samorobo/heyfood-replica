@@ -10,7 +10,7 @@ async function throwIfResNotOk(res: Response) {
       const errorData = await res.json();
       errorMessage = errorData.message || errorMessage;
     } catch {
-      // fallback if parsing fails
+      
     }
     throw new Error(errorMessage);
   }
@@ -36,12 +36,11 @@ export async function apiRequest(
   return await res.json();
 }
 
-// Custom query function with correct typing
 const customQueryFn = async ({ queryKey }: QueryFunctionContext) => {
   const [endpoint, ...params] = queryKey as [string, ...any[]];
   let url = endpoint;
 
-  // Handle query parameters for restaurants
+  
   if (endpoint === "/restaurants" && params.length > 0) {
     const [search, tags, sort] = params;
     const searchParams = new URLSearchParams();
@@ -73,9 +72,9 @@ export const queryClient = new QueryClient({
       queryFn: customQueryFn,
       refetchOnWindowFocus: false,
       refetchInterval: false,
-      staleTime: 2 * 60 * 1000, // 2 minutes
+      staleTime: 2 * 60 * 1000, 
       retry: (failureCount, error: any) => {
-        // Don’t retry on 4xx errors
+        
         if (error?.message?.startsWith("4")) return false;
         return failureCount < 3;
       },

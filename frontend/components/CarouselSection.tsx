@@ -80,7 +80,7 @@ const ScrollButton = styled(IconButton)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     width: 32,
     height: 32,
-    display: 'none' // Hide on small screens to save space
+    display: 'none' 
   },
   '&:hover': {
     backgroundColor: '#f8f9fa',

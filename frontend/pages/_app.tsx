@@ -9,7 +9,7 @@ import { theme } from '../lib/theme';
 import { queryClient } from '../lib/queryClient';
 import createEmotionCache from '../lib/createEmotionCache';
 
-// Client-side cache, shared for the whole session of the user in the browser.
+
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
@@ -32,7 +32,7 @@ export default function MyApp(props: MyAppProps) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>

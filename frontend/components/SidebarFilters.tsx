@@ -16,9 +16,9 @@ const SidebarContainer = styled(Box)(({ theme }) => ({
 
 const FixedSidebarWrapper = styled(Box)(({ theme }) => ({
   position: 'sticky',
-  top: 20, // Offset from top when scrolling
+  top: 20, 
   height: 'fit-content',
-  maxHeight: 'calc(100vh - 40px)', // Prevent overflow on small screens
+  maxHeight: 'calc(100vh - 40px)', 
   overflowY: 'auto',
   width: 280,
   flexShrink: 0,
@@ -32,7 +32,7 @@ const FixedSidebarWrapper = styled(Box)(({ theme }) => ({
     width: '100%',
     marginBottom: 16
   },
-  // Custom scrollbar styling for better UX
+  
   '&::-webkit-scrollbar': {
     width: 4
   },
@@ -159,7 +159,7 @@ export default function SidebarFilters({
         </Box>
       </SidebarContainer>
 
-      {/* Sort Section */}
+      
       <SidebarContainer>
         <SidebarHeader>
           <SortIcon sx={{ 

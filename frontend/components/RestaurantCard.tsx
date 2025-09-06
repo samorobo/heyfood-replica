@@ -83,7 +83,7 @@ export default function RestaurantCard({
       onClick={handleClick}
       data-testid={`card-restaurant-${restaurant.id}`}
     >
-      {/* Image + Badges */}
+      
       <Box sx={{ position: 'relative' }}>
         <CardMedia
           component="img"
@@ -104,7 +104,7 @@ export default function RestaurantCard({
         )}
       </Box>
 
-      {/* Content */}
+      
       <CardContent sx={{ p: { xs: 1.5, sm: 2 } }}>
         <Typography
           variant="h6"
@@ -130,7 +130,7 @@ export default function RestaurantCard({
           ))}
         </TagsContainer>
 
-        {/* Rating */}
+        
         <Box
           sx={{
             display: 'flex',
@@ -160,7 +160,7 @@ export default function RestaurantCard({
           </Typography>
         </Box>
 
-        {/* Delivery Info */}
+        
         {restaurant.deliveryInfo && (
           <Box
             sx={{

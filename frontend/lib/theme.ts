@@ -1,10 +1,10 @@
 import { createTheme } from '@mui/material/styles';
 
-// Create Material-UI theme with HeyFood branding
+
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#22c55e', // HeyFood green
+      main: '#22c55e', 
       light: '#4ade80',
       dark: '#16a34a',
       contrastText: '#ffffff',
